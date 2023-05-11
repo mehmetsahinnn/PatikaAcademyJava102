@@ -22,10 +22,11 @@ bin/
 /nbdist/
 /.nb-gradle/
 
-.idea
+
 PatikaAcademyJava102.iml
 ### VS Code ###
 .vscode/
 
 ### Mac OS ###
 .DS_Store
+/.idea/
