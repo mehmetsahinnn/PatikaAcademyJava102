@@ -1,10 +1,11 @@
 package AdventureGame;
 
-import java.io.PrintStream;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Player extends Game {
-    Inventory inventory = new Inventory();
+    Scanner scanner = new Scanner(System.in);
+    Inventory inventory;
     private int damage;
     private int health;
     private int money;
@@ -13,41 +14,53 @@ public class Player extends Game {
 
     public Player(String name) {
         this.name = name;
+        this.inventory = new Inventory(this);
     }
 
+
     public void selectChar(String charName) {
-        PrintStream var10000;
-        String var10001;
         if (Objects.equals(charName, "samurai")) {
             this.charName = "samurai";
             this.money = 15;
-            this.health = 21;
-            this.damage = 5;
-            var10000 = System.out;
-            var10001 = this.getName();
-            var10000.println(var10001 + " " + this.getCharName() + " : Money : " + this.getMoney() + " Health : " + this.getHealth() + " Damage : " + this.getDamage());
+            this.health = 100;
+            this.inventory.setWeapon(new Weapon("Katana", 1, 10, 0));
+            this.setDamage(inventory.weaponDamage);
+            this.inventory.setArmor(Armor.armors()[0]);
+            this.damage = 20;
         } else if (Objects.equals(charName, "archer")) {
             this.charName = "archer";
             this.money = 20;
-            this.health = 18;
+            this.health = 100;
+            this.inventory.setWeapon(new Weapon("Arrow", 2, 10, 0));
+            this.setDamage(inventory.weaponDamage);
+            this.inventory.setArmor(Armor.armors()[0]);
             this.damage = 7;
-            var10000 = System.out;
-            var10001 = this.getName();
-            var10000.println(var10001 + " " + this.getCharName() + " : Money : " + this.getMoney() + " Health : " + this.getHealth() + " Damage : " + this.getDamage());
         } else if (Objects.equals(charName, "knight")) {
             this.charName = "knight";
             this.money = 5;
-            this.health = 24;
-            this.damage = 8;
-            var10000 = System.out;
-            var10001 = this.getName();
-            var10000.println(var10001 + " " + this.getCharName() + " : Money : " + this.getMoney() + " Health : " + this.getHealth() + " Damage : " + this.getDamage());
+            this.health = 100;
+            this.inventory.setWeapon(new Weapon("Sword", 3, 10, 0));
+            this.setDamage(inventory.weaponDamage);
+            this.inventory.setArmor(Armor.armors()[0]);
+            this.damage = 15;
         } else {
-            System.out.println("Please enter a valid character ! ");
-            this.game = false;
+            System.out.print("Please enter a valid character : ");
+            selectChar(scanner.next());
         }
-
     }
+
+    protected void printInfo() {
+        System.out.println(
+                "Name : " + this.getName() +
+                        "\nCharacter : " + this.getCharName() +
+                        "\nHealth : " + this.getHealth() +
+                        "\nDamage : " + this.inventory.getWeaponDamage() +
+                        "\nBlock : " + this.inventory.getArmorDefence() +
+                        "\nMoney : " + this.getMoney() +
+                        "\nWeapon : " + this.getInventory().getWeapon().getName()
+        );
+    }
+
 
     public int getDamage() {
         return this.damage;
@@ -87,5 +100,13 @@ public class Player extends Game {
 
     public void setCharName(String charName) {
         this.charName = charName;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
