@@ -1,6 +1,5 @@
 package AdventureGame;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
@@ -29,19 +28,16 @@ public class Game {
         Location location = null;
         while (true) {
             player.printInfo();
-            System.out.println("Where do you want to go ? (Safe House/Tool Store or Cave/River/Forest) : ");
+            System.out.println("Where do you want to go ? (Safe House/Tool Store or Cave/River/Forest/Mine) : ");
             String selection = scanner.nextLine().toLowerCase();
 
-            if (Objects.equals(selection, "safe house")) {
-                location = new SafeHouse(player);
-            } else if (Objects.equals(selection, "tool store")) {
-                location = new Toolstore(player);
-            } else if (Objects.equals(selection, "cave")) {
-                location = new Cave(player);
-            } else if (Objects.equals(selection, "forest")) {
-                location = new Forest(player);
-            } else if (Objects.equals(selection, "river")) {
-                location = new River(player);
+            switch (selection) {
+                case "safe house" -> location = new SafeHouse(player);
+                case "tool store" -> location = new Toolstore(player);
+                case "cave" -> location = new Cave(player);
+                case "forest" -> location = new Forest(player);
+                case "river" -> location = new River(player);
+                case "mine" -> location = new Mine(player);
             }
 
             assert location != null;

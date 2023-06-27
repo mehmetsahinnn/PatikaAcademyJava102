@@ -2,9 +2,9 @@ package AdventureGame;
 
 public class Inventory {
     boolean water;
-
     boolean food;
-    boolean firewoord;
+    boolean firewood;
+    boolean emerald;
     String weaponName;
     String armorName;
     int weaponDamage;
@@ -16,7 +16,8 @@ public class Inventory {
     public Inventory(Player player) {
         this.water = false;
         this.food = false;
-        this.firewoord = false;
+        this.firewood = false;
+        this.emerald = false;
         this.weaponName = "Fists";
         this.armorName = "Clothes";
         this.weaponDamage = getWeaponDamage();
@@ -42,12 +43,12 @@ public class Inventory {
         this.food = food;
     }
 
-    public boolean isFirewoord() {
-        return firewoord;
+    public boolean isFirewood() {
+        return firewood;
     }
 
-    public void setFirewoord(boolean firewoord) {
-        this.firewoord = firewoord;
+    public void setFirewood(boolean firewood) {
+        this.firewood = firewood;
     }
 
     public String getWeaponName() {
@@ -104,5 +105,13 @@ public class Inventory {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isEmerald() {
+        return emerald;
+    }
+
+    public void setEmerald(boolean emerald) {
+        this.emerald = emerald;
     }
 }

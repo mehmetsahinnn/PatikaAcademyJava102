@@ -14,72 +14,107 @@ public abstract class BattleLocation extends Location {
 
     @Override
     public boolean onLocation() {
-        Random random = new Random();
-        int monsterCount = random.nextInt(10) + 2;
-        System.out.println("You are in " + getName() + " and there are " + monsterCount + " monsters");
-        System.out.println("<S> for run");
-        System.out.println("<A> for attack");
-        String selectCase = scanner.nextLine().toUpperCase();
-        if (selectCase.equals("S")) {
-            if (random.nextInt(100) <= 20) {
-                System.out.println("You escaped");
-                return true;
-            }
-        }
-        if (selectCase.equals("A")) {
-            if (combat(monsterCount)) {
-                System.out.println("You won");
-                getPlayer().setMoney(getPlayer().getMoney() + 20);
-                return true;
-            }
-            if (getPlayer().getHealth() <= 0) {
-                System.out.println("Game Over");
-                return false;
-            }
-        }
-        if (selectCase.equals("E")) {
-            location = new SafeHouse(getPlayer());
-        }
         return true;
     }
 
+    void battleDrop() {
+        Random random = new Random();
+        int weaponChance = random.nextInt(100);
+        int armorChance = random.nextInt(100);
+        int moneyChance = random.nextInt(100);
+        if (weaponChance < 15) {
+            if (weaponChance < 3) {
+                System.out.println("You obtained a Rocket Launcher!");
+                getPlayer().getInventory().setWeapon(Weapon.weapons()[5]);
+            }
+            if (weaponChance < 6 && weaponChance > 2) {
+                System.out.println("You obtained a Machine Gun!");
+                getPlayer().getInventory().setWeapon(Weapon.weapons()[4]);
+            }
+            if (weaponChance > 7) {
+                System.out.println("You obtained a Shotgun!");
+                getPlayer().getInventory().setWeapon(Weapon.weapons()[3]);
+            }
+        }
+        if (armorChance < 15) {
+            if (armorChance < 3) {
+                System.out.println("You obtained a Heavy Armor!");
+                getPlayer().getInventory().setArmor(Armor.armors()[2]);
+            }
+            if (armorChance < 6 && armorChance > 2) {
+                System.out.println("You obtained a Medium Armor!");
+                getPlayer().getInventory().setArmor(Armor.armors()[1]);
+            }
+            if (armorChance > 7) {
+                System.out.println("You obtained a Light Armor!");
+                getPlayer().getInventory().setArmor(Armor.armors()[0]);
+            }
+        }
+        if (moneyChance < 20) {
+            if (moneyChance < 5) {
+                System.out.println("You obtained 10 Money!");
+                getPlayer().setMoney(getPlayer().getMoney() + 10);
+            }
+            if (moneyChance < 11 && moneyChance > 5) {
+                System.out.println("You obtained 5 Money!");
+                getPlayer().setMoney(getPlayer().getMoney() + 5);
+            }
+            if (moneyChance > 10) {
+                System.out.println("You obtained 1 Money!");
+                getPlayer().setMoney(getPlayer().getMoney() + 1);
+            }
+        } else {
+            System.out.println("You didn't obtain anything.");
+        }
+    }
 
-    private boolean combat(int monsterCount) {
+    boolean combat(int monsterCount) {
+        boolean result = true;
         for (int i = 1; i < monsterCount; i++) {
             Random random = new Random();
             int monsterHealth = random.nextInt(monster.getHealth()) + 1;
             while (true) {
-                System.out.println("<A> for attack");
-                System.out.println("<E> for escape");
-                String selectCase = scanner.nextLine().toUpperCase();
-                if (selectCase.equals("A")) {
-                    System.out.println();
-                    int playerDamage = random.nextInt(getPlayer().getDamage())+1;
-                    System.out.println("You attacked " + playerDamage);
-                    monsterHealth -= playerDamage;
-                    if (monsterHealth <= 0) {
-                        System.out.println("You killed " + i + ". monster");
+                boolean isPlayerTurn = random.nextBoolean();
+                if (isPlayerTurn) {
+                    System.out.println("<A> for attack");
+                    System.out.println("<E> for escape");
+                    String selectCase = scanner.nextLine().toUpperCase();
+                    if (selectCase.equals("A")) {
+                        System.out.println();
+                        int playerDamage = random.nextInt(getPlayer().getDamage()) + 1;
+                        System.out.println("You attacked " + playerDamage);
+                        monsterHealth -= playerDamage;
+                        if (monsterHealth <= 0) {
+                            System.out.println("You killed " + i + ". monster");
+                            break;
+                        }
+                        System.out.println("Monster health: " + monsterHealth);
+                        System.out.println();
+                    } else if (selectCase.equals("E")) {
+                        location = new SafeHouse(getPlayer());
                         break;
                     }
-                    System.out.println("Monster health: " + monsterHealth);
-                    System.out.println();
+                } else {
+                    System.out.println("Monster turn");
                     int monsterAttack = random.nextInt(monster.getDamage()) + 5;
                     System.out.println("Monster attacked " + monsterAttack);
-                    getPlayer().setHealth(getPlayer().getHealth() - (monsterAttack) + ((getPlayer().getInventory().getArmor().getBlock())/100));
+                    getPlayer().setHealth(getPlayer().getHealth() - (monsterAttack) + ((getPlayer().getInventory().getArmor().getBlock()) / 100));
                     if (getPlayer().getHealth() <= 0) {
                         System.out.println("You lost");
-                        return false;
+                        result = false;
+                        break;
                     }
                     System.out.println("Your health: " + getPlayer().getHealth());
                     System.out.println();
-                } else if (selectCase.equals("E")) {
-                    location = new SafeHouse(getPlayer());
-                    break;
                 }
             }
-            getPlayer().setMoney(getPlayer().getMoney() + 20);
+            if (!result) break;
         }
-        return false;
+        battleDrop();
+        if (result) {
+            result = false;
+        }
+        return result;
     }
 }
 
