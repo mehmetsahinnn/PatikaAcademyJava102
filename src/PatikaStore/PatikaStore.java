@@ -110,17 +110,17 @@ public class PatikaStore {
             System.out.println("Üzgünüz, mağazada mevcut telefon ürünü bulunmamaktadır.");
         } else {
             System.out.println("Telefon Listesi");
-            System.out.println(" -----------------------------------------------------------------------------------------------");
-            System.out.printf("| %-2s | %-30s | %-10s | %-10s | %-10s | %-8s | %-5s |\n",
-                    "ID", "Ürün Adı", "Fiyat", "Marka", "Depolama", "Ekran", "RAM");
-            System.out.println(" -----------------------------------------------------------------------------------------------");
+            System.out.println(" ---------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("| %-3s | %-30s | %-10s | %-10s | %-10s | %-10s | %-8s | %-8s | %-8s |\n",
+                    "ID", "Ürün Adı", "Fiyat", "Marka", "Depolama", "Ekran", "Pil", "RAM", "Renk");
+            System.out.println(" ---------------------------------------------------------------------------------------------------------------------------");
             for (SmartPhones phone : phones) {
-                System.out.printf("| %-2d | %-30s | %10d | %-10s | %-10d | %-8d | %-5d |\n",
-                        phone.getId(), phone.getName(), phone.getPrice(),
-                        phone.getBrand(), phone.getStock(), phone.getScreenSize(),
-                        phone.getRam());
+                System.out.printf("| %-3d | %-30s | %-10d | %-10s | %-10d | %-10d | %-8d | %-8d | %-8s |\n",
+                        phone.getId(), phone.getName(), phone.getPrice(), phone.getBrand(),
+                        phone.getStorage(), phone.getScreenSize(), phone.getBatteryPower(),
+                        phone.getRam(), phone.getColor());
             }
-            System.out.println(" -----------------------------------------------------------------------------------------------");
+            System.out.println(" ---------------------------------------------------------------------------------------------------------------------------");
         }
         listPhones();
     }
