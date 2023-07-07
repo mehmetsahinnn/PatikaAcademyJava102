@@ -3,27 +3,7 @@ package RaceThreads;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main implements Runnable {
-    private volatile int orderNo;
-    private final Object LOCK = new Object();
-
-    public Main() {
-        this.orderNo = 0;
-    }
-
-    @Override
-    public void run() {
-        synchronized (LOCK) {
-            this.orderNo = this.orderNo + 1;
-            StringBuilder builder = new StringBuilder();
-            builder.append(Thread.currentThread().getName());
-            builder.append(" thread got ");
-            builder.append(this.orderNo);
-            builder.append(" from Qmatic!");
-            System.out.println(builder.toString());
-        }
-
-    }
+public class Main {
 
     static List<Integer> arrayList = new ArrayList<>();
     static List<Integer> odd = new ArrayList<>();
