@@ -31,7 +31,7 @@ public class Book {
         bookMap.
                 forEach((bookName, authorName) -> System.out.println(bookName + " " + authorName));
 
-        System.out.println("-------------------");
+        System.out.println("-----------------");
 
         bookList.stream()
                 .filter(book -> book.getPageNumber() > 100)
@@ -43,13 +43,31 @@ public class Book {
         return bookName;
     }
 
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
     public Integer getPageNumber() {
         return pageNumber;
     }
 
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
 
     public String getAuthorName() {
         return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public Date getRelaseDate() {
+        return relaseDate;
+    }
+
+    public void setRelaseDate(Date relaseDate) {
+        this.relaseDate = relaseDate;
     }
 }
